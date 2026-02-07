@@ -9,10 +9,11 @@ import time
 
 app = FastAPI()
 
-@app.get("/", response_class=HTMLResponse)
-def serve_frontend():
-    with open("index.html", "r", encoding="utf-8") as f:
-        return f.read()
+from fastapi.staticfiles import StaticFiles
+
+# Serve index.html and any static files (like CSS, JS)
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
+
 
 app.add_middleware(
     CORSMiddleware,
